@@ -2,12 +2,14 @@ import requests
 from bs4 import BeautifulSoup
 
 item_dictionary = {}
+item_dictionary_count = 0
 price_cart_encountered = 0
 discountinued_encountered = 0
 page_count = 0
 
 while discountinued_encountered < 1:
     URL = f"https://www.barcodegiant.com/cats/tablets/page/{page_count + 1}.htm"
+    print(f"Pulling webpage {page_count}...")
     page_count += 1
     r = requests.get(URL)
 
@@ -15,7 +17,6 @@ while discountinued_encountered < 1:
 
     items = soup.findAll('div', attrs={'class': 'item-area clearfix'})
 
-    i = 0
     for item in items:
         if_price_cart = item.find('button', attrs={'title': 'See price in cart'})
         if_discontinued = item.find('button', attrs={'title': 'Discontinued - Need Assistance'})
@@ -35,7 +36,8 @@ while discountinued_encountered < 1:
             item_features = {'Title': title,
                              'Description': description,
                              'price': price, }
-            item_dictionary[i] = item_features
+            item_dictionary[item_dictionary_count] = item_features
+            item_dictionary_count += 1
         else:
             if if_price_cart:
                 print("Price in chart encountered")
@@ -43,9 +45,8 @@ while discountinued_encountered < 1:
             elif if_discontinued:
                 print("Discontinued item encountered")
                 discountinued_encountered += 1
-        print(f"Page {i} has been processed...")
-        i += 1
 
-print(f"The length of dict is {len(item_dictionary)}.\n Price in cart was encountered {price_cart_encountered} times.\n Discontinued Iteam was encountered {discountinued_encountered} times.")
+
+print(f"The length of dict is {len(item_dictionary)}. \nPrice in cart was encountered {price_cart_encountered} times. \nDiscontinued Iteam was encountered {discountinued_encountered} times.")
 
     
