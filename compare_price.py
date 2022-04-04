@@ -1,13 +1,18 @@
 import requests
 from bs4 import BeautifulSoup
+from datetime import date
 
-item_dictionary = {}
-item_dictionary_count = 0
+item_count = 0
 price_cart_encountered = 0
 discountinued_encountered = 0
 page_count = 0
+SOURCE_WEBSITE = 'Barcode_Giant'
+DATE_ACCESSED = str(date.today())
 
-while discountinued_encountered < 1:
+file = open(f"Webscrape_{SOURCE_WEBSITE}_{DATE_ACCESSED}.csv", "w")
+file.write("Title, Description, Price, Web_source, Link, Date_Accessed\n")
+
+while item_count < 25:
     URL = f"https://www.barcodegiant.com/cats/tablets/page/{page_count + 1}.htm"
     print(f"Pulling webpage {page_count}...")
     page_count += 1
@@ -24,20 +29,19 @@ while discountinued_encountered < 1:
             title = 'None'
             description = 'None'
             price = 'None'
+            link = 'None'
             title_object = item.find('h2', attrs={'class': 'product-name'}).a
             if title_object:
-                title = title_object.text
+                title = title_object['title'].strip('\n')
+                link = title_object['href']
             description_object = item.find('div', attrs={'class': 'details-area'}).div
             if description_object:
-                description = description_object.text
+                description = description_object.text.replace(',', '-')
             price_object = item.find('span', attrs={'class': 'price'})
             if price_object:
-                price = price_object.text
-            item_features = {'Title': title,
-                             'Description': description,
-                             'price': price, }
-            item_dictionary[item_dictionary_count] = item_features
-            item_dictionary_count += 1
+                price = price_object.text.replace(',', '')
+            file.write(f"stuff")
+            item_count += 1
         else:
             if if_price_cart:
                 print("Price in chart encountered")
@@ -47,6 +51,6 @@ while discountinued_encountered < 1:
                 discountinued_encountered += 1
 
 
-print(f"The length of dict is {len(item_dictionary)}. \nPrice in cart was encountered {price_cart_encountered} times. \nDiscontinued Iteam was encountered {discountinued_encountered} times.")
+print(f"The length of dict is {item_count}. \nPrice in cart was encountered {price_cart_encountered} times. \nDiscontinued Item was encountered {discountinued_encountered} times.")
 
-    
+file.close()
