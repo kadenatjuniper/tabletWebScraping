@@ -12,7 +12,8 @@ def barcode_giant_web_scrap():
     SOURCE_WEBSITE = 'barcode_giant'
     DATE_ACCESSED = str(date.today())
 
-    file = open(f"webscrape_{SOURCE_WEBSITE}_{DATE_ACCESSED}.csv", "w")
+    file_string = f"web_scrap_{SOURCE_WEBSITE}_{DATE_ACCESSED}.csv"
+    file = open(file_string, "w")
     file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Part/Item #, MFG #, SKU, CDW #\n")
 
     while discontinued_encountered < 100:
