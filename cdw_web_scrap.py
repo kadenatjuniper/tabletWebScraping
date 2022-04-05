@@ -61,4 +61,4 @@ def get_total_pages():
     return total_pages
 
 
-cdw_web_scrap()
+# cdw_web_scrap()

@@ -57,5 +57,7 @@ def barcode_giant_web_scrap():
     print(f"----> FINISHED: Web scraping BarcodeGiant.com \nThe number of items saved to the file is {item_count}. \nPrice in cart was encountered {price_cart_encountered} times. \nDiscontinued Item was encountered {discontinued_encountered} times.")
 
     file.close()
+    return file_string
 
-barcode_giant_web_scrap()
+
+# barcode_giant_web_scrap()

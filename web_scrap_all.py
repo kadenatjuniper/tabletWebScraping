@@ -21,13 +21,14 @@ print(f"Scrapping CDW.com took: {after-before} seconds")
 # create one big file
 one_file = open("web_scrap_all.csv", "w")
 for file in files:
-    f = open(file)
+    print(file)
+    f = open(file, 'r')
     for line in f:
         one_file.write(line)
     f.close()
 one_file.close()
 
-total_after =time.time()
+total_after = time.time()
 print(f"Web Scrapping All Websites took: {total_after - total_before} seconds")
 
 
