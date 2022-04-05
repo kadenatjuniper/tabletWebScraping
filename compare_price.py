@@ -10,7 +10,7 @@ SOURCE_WEBSITE = 'Barcode_Giant'
 DATE_ACCESSED = str(date.today())
 
 file = open(f"Webscrape_{SOURCE_WEBSITE}_{DATE_ACCESSED}.csv", "w")
-file.write("Title, Description, Price, Web_source, Link, Date_Accessed\n")
+file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Part/Item #, MFG #, SKU, CDW #\n")
 
 while item_count < 25:
     URL = f"https://www.barcodegiant.com/cats/tablets/page/{page_count + 1}.htm"
@@ -36,11 +36,11 @@ while item_count < 25:
                 link = title_object['href']
             description_object = item.find('div', attrs={'class': 'details-area'}).div
             if description_object:
-                description = description_object.text.replace(',', '-')
+                description = description_object.text.replace(',', '-').strip('\n')
             price_object = item.find('span', attrs={'class': 'price'})
             if price_object:
                 price = price_object.text.replace(',', '')
-            file.write(f"stuff")
+            file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, {link}, {DATE_ACCESSED}\n")
             item_count += 1
         else:
             if if_price_cart:
