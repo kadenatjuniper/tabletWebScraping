@@ -48,4 +48,5 @@ def allterra_web_scrap():
     return file_string
 
 
-allterra_web_scrap()
+
+# allterra_web_scrap()
