@@ -15,13 +15,22 @@ def cdw_web_scrap():
     file = open(file_string, "w")
     file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Part/Item #, MFG #, SKU, CDW #\n")
 
-    total_pages = get_total_pages()
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36',
+        'referrer': 'https://google.com',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Pragma': 'no-cache',
+    }
+
+    total_pages = get_total_pages(headers)
 
     while page_count < total_pages:
         URL = f"https://www.cdw.com/search/computers/tablets/?key=&w=CC&ln=0&pcurrent={page_count + 1}.htm"
         print(f"Pulling webpage {page_count}...")
         page_count += 1
-        r = requests.get(URL)
+        r = requests.get(URL, headers=headers)
 
         soup = BeautifulSoup(r.content, 'html.parser')
 
@@ -50,9 +59,9 @@ def cdw_web_scrap():
     return file_string
 
 
-def get_total_pages():
+def get_total_pages(headers):
     first_URL = "https://www.barcodesinc.com/cats/tablets/rugged.htm"
-    r = requests.get(first_URL)
+    r = requests.get(first_URL, headers=headers)
     soup = BeautifulSoup(r.content, 'html.parser')
     print(soup.prettify())
     items_string = soup.find('td', attrs={'class': 'hitcount'}).div.text
