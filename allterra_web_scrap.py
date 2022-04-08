@@ -4,7 +4,7 @@ from datetime import date
 
 
 def allterra_web_scrap():
-    print("----> STARTING: web scraping of CDW.com")
+    print("----> STARTING: web scraping of Allterra.com")
     item_count = 0
     SOURCE_WEBSITE = 'allterra'
     DATE_ACCESSED = str(date.today())
@@ -42,7 +42,7 @@ def allterra_web_scrap():
         item_count += 1
 
 
-    print(f"----> FINISHED: Web scraping CDW.com \nThe number of items saved to the file is {item_count}.")
+    print(f"----> FINISHED: Web scraping Allterra.com \nThe number of items saved to the file is {item_count}.")
 
     file.close()
     return file_string
