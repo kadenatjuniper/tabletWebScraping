@@ -4,6 +4,7 @@ from datetime import date
 from barcode_giant_web_scrap import barcode_giant_web_scrap
 from cdw_web_scrap import cdw_web_scrap
 from allterra_web_scrap import allterra_web_scrap
+from barcodes_inc_web_scrap import barcodes_inc_web_scrap
 
 total_before = time.time()
 files = []
@@ -25,6 +26,12 @@ before = time.time()
 files.append(allterra_web_scrap())
 after = time.time()
 print(f"Scrapping Allterra.com took: {after-before} seconds")
+
+# scrap BarcodesInc.com
+before = time.time()
+files.append(barcodes_inc_web_scrap())
+after = time.time()
+print(f"Scrapping BarcodesInc.com took: {after-before} seconds")
 
 # create one big file
 one_file = open(f"web_scrap_all_{str(date.today())}.csv", "w")
