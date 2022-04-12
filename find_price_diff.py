@@ -1,6 +1,13 @@
 import sys
 from datetime import date
 
+TITLE = 0
+DESCRIPTION = 1
+PRICE = 2
+WEB_SOURCE = 3
+LINK = 4
+DATE_ACCESSED = 5
+
 output_file = open(f"price_diff_{str(date.today())}.csv")
 
 file_name_one = sys.argv[1]
@@ -20,8 +27,8 @@ for f1_line in f1:
     f2.readline()  # remove header
     for f2_line in f2:
         f2_line_split = f2_line.split(',')
-        if f1_line_split[0] == f2_line_split[0] and f1_line_split[1] == f2_line_split[1]:
-
+        if f1_line_split[TITLE] == f2_line_split[TITLE] and f1_line_split[DESCRIPTION] == f2_line_split[DESCRIPTION] and f1_line_split[PRICE] != f2_line_split[PRICE]:
+            output_file.write(f"{f1_line_split[TITLE]}, {f1_line_split[DESCRIPTION]}, {f1_line_split[PRICE]}, {f2_line_split[PRICE]}, {f2_line_split[LINK]}")
 
 f1.close()
 f2.close()
