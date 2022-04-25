@@ -13,7 +13,7 @@ def cdw_web_scrap():
 
     file_string = f"web_scrap_{SOURCE_WEBSITE}_{DATE_ACCESSED}.csv"
     file = open(file_string, "w")
-    file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Part/Item #, MFG #, SKU, CDW #\n")
+    file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Model #\n")
 
     total_pages = get_total_pages()
 
@@ -36,11 +36,12 @@ def cdw_web_scrap():
             if title_object:
                 title = title_object.text.replace(',', '')
                 link = "cdw.com" + title_object['href']
+            model_number = 'test'
             description = "cdw.com doesn't have a description with their listings"
             price_object = item.find('div', attrs={'class': 'price-type-price'})
             if price_object:
                 price = price_object.text.replace(',', '')
-            file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, {link}, {DATE_ACCESSED}\n")
+            file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, {link}, {DATE_ACCESSED}, {model_number}\n")
             item_count += 1
 
 

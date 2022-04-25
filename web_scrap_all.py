@@ -35,7 +35,7 @@ print(f"Scrapping BarcodesInc.com took: {after-before} seconds")
 
 # create one big file
 one_file = open(f"web_scrap_all_{str(date.today())}.csv", "w")
-one_file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Part/Item #, MFG #, SKU, CDW #\n")
+one_file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Model #\n")
 for file in files:
     f = open(file, 'r')
     f.readline() # remove the header

@@ -14,7 +14,7 @@ def barcode_giant_web_scrap():
 
     file_string = f"web_scrap_{SOURCE_WEBSITE}_{DATE_ACCESSED}.csv"
     file = open(file_string, "w")
-    file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Part/Item #, MFG #, SKU, CDW #\n")
+    file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Model #\n")
 
     while discontinued_encountered < 100:
         URL = f"https://www.barcodegiant.com/cats/tablets/page/{page_count + 1}.htm"
@@ -38,13 +38,14 @@ def barcode_giant_web_scrap():
                 if title_object:
                     title = title_object['title'].strip('\n')
                     link = title_object['href']
+                    model_number = title_object.span.text.split['|'][0].split[':'][-1]
                 description_object = item.find('div', attrs={'class': 'details-area'}).div
                 if description_object:
                     description = description_object.text.replace(',', '-').strip('\n')
                 price_object = item.find('span', attrs={'class': 'price'})
                 if price_object:
                     price = price_object.text.replace(',', '')
-                file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, {link}, {DATE_ACCESSED}\n")
+                file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, {link}, {DATE_ACCESSED}, {model_number}\n")
                 item_count += 1
             else:
                 if if_price_cart:
