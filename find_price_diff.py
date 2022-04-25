@@ -7,6 +7,7 @@ PRICE = 2
 WEB_SOURCE = 3
 LINK = 4
 DATE_ACCESSED = 5
+MODEL_NUMBER = 6
 
 output_file = open(f"price_diff_{str(date.today())}.csv", "w")
 

@@ -11,7 +11,7 @@ def allterra_web_scrap():
 
     file_string = f"web_scrap_{SOURCE_WEBSITE}_{DATE_ACCESSED}.csv"
     file = open(file_string, "w")
-    file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Part/Item #, MFG #, SKU, CDW #\n")
+    file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Model #\n")
 
     # This header makes it so the website doesn't realize this is a web scrapper. There is a create article with more tricks like this: https://pknerd.medium.com/5-strategies-to-write-unblock-able-web-scrapers-in-python-5e40c147bdaf
     headers = {
@@ -34,11 +34,12 @@ def allterra_web_scrap():
         if title_object:
             title = title_object['title'].replace(',', '')
             link = title_object['href']
+        model_number = 'Not Implemented'
         description = "allterra.com doesn't have a description with their listings"
         price_object = item.find('span', attrs={'class': 'price'})
         if price_object:
             price = price_object.text.replace(',', '')
-        file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, {link}, {DATE_ACCESSED}\n")
+        file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, {link}, {DATE_ACCESSED}, {model_number}\n")
         item_count += 1
 
 

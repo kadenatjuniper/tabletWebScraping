@@ -13,7 +13,7 @@ def barcodes_inc_web_scrap():
 
     file_string = f"web_scrap_{SOURCE_WEBSITE}_{DATE_ACCESSED}.csv"
     file = open(file_string, "w")
-    file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Part/Item #, MFG #, SKU, CDW #\n")
+    file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Model #\n")
 
     scraper = cloudscraper.create_scraper()
     total_pages = get_total_pages(scraper)
@@ -39,13 +39,14 @@ def barcodes_inc_web_scrap():
             if title_object:
                 title = title_object.a.b.text.replace(',', '').replace('\n', '')
                 link = "barcodesinc.com" + title_object.a['href']
+            model_number = 'Not Implemented'
             description_object = item.find('div', attrs={'class': 'search_result_description'})
             if description_object:
                 description = description_object.text.replace(',', '-').replace('\n', '')
             price_object = item.find('span', attrs={'class': 'price'})
             if price_object:
                 price = price_object.text.replace(',', '')
-            file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, {link}, {DATE_ACCESSED}\n")
+            file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, {link}, {DATE_ACCESSED}, {model_number}\n")
             item_count += 1
 
     print(f"----> FINISHED: Web scraping BarcodesInc.com \nThe number of items saved to the file is {item_count}.")
