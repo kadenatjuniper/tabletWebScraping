@@ -36,7 +36,9 @@ def cdw_web_scrap():
             if title_object:
                 title = title_object.text.replace(',', '')
                 link = "cdw.com" + title_object['href']
-            model_number = 'Not Implemented'
+            model_number_object = item.find('span', attrs={'class': 'mfg-code'})
+            if model_number_object:
+                model_number = model_number_object.text.split(':')[-1].replace(' ', '')
             description = "cdw.com doesn't have a description with their listings"
             price_object = item.find('div', attrs={'class': 'price-type-price'})
             if price_object:
