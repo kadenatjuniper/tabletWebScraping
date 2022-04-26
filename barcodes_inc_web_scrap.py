@@ -39,7 +39,7 @@ def barcodes_inc_web_scrap():
             if title_object:
                 title = title_object.a.b.text.replace(',', '').replace('\n', '')
                 link = "barcodesinc.com" + title_object.a['href']
-            model_number = 'Not Implemented'
+                model_number = title_object.a.text.split('(')[-1].replace(')', '').replace(' ', '')
             description_object = item.find('div', attrs={'class': 'search_result_description'})
             if description_object:
                 description = description_object.text.replace(',', '-').replace('\n', '')

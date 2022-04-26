@@ -34,7 +34,7 @@ def allterra_web_scrap():
         if title_object:
             title = title_object['title'].replace(',', '')
             link = title_object['href']
-        model_number = 'Not Implemented'
+        model_number = ''
         description = "allterra.com doesn't have a description with their listings"
         price_object = item.find('span', attrs={'class': 'price'})
         if price_object:
