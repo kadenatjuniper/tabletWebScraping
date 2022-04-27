@@ -39,7 +39,6 @@ def barcode_giant_web_scrap():
                     title = title_object['title'].strip('\n')
                     link = title_object['href']
                     model_number = title_object.find('span').text.split('|')[0].split(':')[-1].replace(' ', '')
-                    print(f"Model Number: {model_number}")
                 description_object = item.find('div', attrs={'class': 'details-area'}).div
                 if description_object:
                     description = description_object.text.replace(',', '-').strip('\n')
