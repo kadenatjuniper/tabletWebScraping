@@ -32,9 +32,13 @@ newFile = open(newFilename)
 for line in newFile:
     splitLine = line.split(',')
     if splitLine[NEWFILE_MODEL] in items:
-        pass
+        items[splitLine[NEWFILE_MODEL]][] # DO MORE STUFF HERE
     else:
-        item = {'title': splitLine[NEWFILE_TITLE], 'description': splitLine[NEWFILE_DESCRIPTION], 'price': splitLine[NEWFILE_PRICE], 'source': splitLine[NEWFILE_SOURCE], 'link': splitLine[NEWFILE_LINK], 'date': splitLine[NEWFILE_DATE]}
+        item = {'title': splitLine[NEWFILE_TITLE], 'description': splitLine[NEWFILE_DESCRIPTION], 'price': list(splitLine[NEWFILE_PRICE]), 'source': list(splitLine[NEWFILE_SOURCE] + ': ' + splitLine[NEWFILE_LINK]), 'date': splitLine[NEWFILE_DATE]}
+        items[splitLine[NEWFILE_MODEL]] = item
+
+
+
 
 priceFile.close()
 infoFile.close()
