@@ -34,7 +34,7 @@ for line in newFile:
     if splitLine[NEWFILE_MODEL] in items:
         pass
     else:
-        item = {'title': splitLine[NEWFILE_TITLE], 'description': splitLine s, 'price': , 'source': , 'link': , 'date': }
+        item = {'title': splitLine[NEWFILE_TITLE], 'description': splitLine[NEWFILE_DESCRIPTION], 'price': splitLine[NEWFILE_PRICE], 'source': splitLine[NEWFILE_SOURCE], 'link': splitLine[NEWFILE_LINK], 'date': splitLine[NEWFILE_DATE]}
 
 priceFile.close()
 infoFile.close()
