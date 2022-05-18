@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import date
 
 
-def barcode_giant_web_scrap():
+def barcodeGiant():
     print("----> STARTING: web scraping of BarcodeGiant.com")
     item_count = 0
     price_cart_encountered = 0

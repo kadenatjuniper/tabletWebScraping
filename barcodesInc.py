@@ -4,7 +4,7 @@ from math import ceil
 import cloudscraper
 
 
-def barcodes_inc_web_scrap():
+def barcodesInc():
     print("----> STARTING: web scraping of BarcodesInc.com")
     item_count = 0
     page_count = 0

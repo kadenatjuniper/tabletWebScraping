@@ -4,7 +4,7 @@ from datetime import date
 from math import ceil
 
 
-def cdw_web_scrap():
+def cdw():
     print("----> STARTING: web scraping of CDW.com")
     item_count = 0
     page_count = 0

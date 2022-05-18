@@ -1,35 +1,35 @@
 import time
 import os
 from datetime import date
-from barcode_giant_web_scrap import barcode_giant_web_scrap
-from cdw_web_scrap import cdw_web_scrap
-from allterra_web_scrap import allterra_web_scrap
-from barcodes_inc_web_scrap import barcodes_inc_web_scrap
+from barcodeGiant import barcodeGiant
+from cdw import cdw
+from allterra import allterra
+from barcodesInc import barcodesInc
 
 total_before = time.time()
 files = []
 
 # scrap BarcodeGiant.com
 before = time.time()
-files.append(barcode_giant_web_scrap())
+files.append(barcodeGiant())
 after = time.time()
 print(f"Scrapping BarcodeGiant.com took: {after-before} seconds")
 
 # scrap CDW.com
 before = time.time()
-files.append(cdw_web_scrap())
+files.append(cdw())
 after = time.time()
 print(f"Scrapping CDW.com took: {after-before} seconds")
 
 # scrap Allterra.com
 before = time.time()
-files.append(allterra_web_scrap())
+files.append(allterra())
 after = time.time()
 print(f"Scrapping Allterra.com took: {after-before} seconds")
 
 # scrap BarcodesInc.com
 before = time.time()
-files.append(barcodes_inc_web_scrap())
+files.append(barcodesInc())
 after = time.time()
 print(f"Scrapping BarcodesInc.com took: {after-before} seconds")
 
