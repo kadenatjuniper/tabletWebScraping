@@ -49,3 +49,9 @@ total_after = time.time()
 print(f"Web Scrapping All Websites took: {total_after - total_before} seconds")
 
 
+def scrape(scrapeModule, websiteName):
+    before = time.time()
+    files.append(scrapeModule())
+    after = time.time()
+    print(f"Scrapping {websiteName} took: {after - before} seconds")
+
