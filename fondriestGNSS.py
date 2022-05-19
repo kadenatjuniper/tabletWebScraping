@@ -35,6 +35,7 @@ def fondriestGNSS():
         modelNumbers = productListTable.findAll('td', attrs={'class': 'product-list-table-sku'})
         titles = productListTable.findAll('td', attrs={'class': 'product-list-table-description'})
         prices = productListTable.findAll('td', attrs={'class': 'product-list-table-price'})
+        description = soup.find('div', attrs={'class': 'value', 'itemprop': 'description'}).text.replace(',', '-')
 
         for i in range(len(modelNumbers)):
             modelNumbers[i] = modelNumbers[i].text.replace(' ', '')
@@ -49,7 +50,7 @@ def fondriestGNSS():
             title = titles[i].replace(',', '')
             link = productURL
             model_number = modelNumbers[i]
-            description = "Fondriest.com doesn't have a description with their listings"
+            # description = "Fondriest.com doesn't have a description with their listings"
             price = prices[i].replace(',', '')
 
             file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, {link}, {DATE_ACCESSED}, {model_number}\n")
