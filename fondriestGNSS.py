@@ -21,25 +21,36 @@ def fondriestGNSS():
     URL = f"https://www.fondriest.com/products/wireless-data/gps-receivers.htm"
     r = requests.get(URL, headers=headers)
     soup = BeautifulSoup(r.content, 'html.parser')
-    itemsGeneral = soup.findAll('li', attrs={'class': 'item'})
+    products = soup.find('div', attrs={'class': 'products wrapper grid products-grid products-grid-partitioned category-products-grid centered equal-height pos-'})
+    itemsGeneral = products.findAll('li', attrs={'class': 'item'})
 
-    print(f"itemsGeneral: {itemsGeneral}")
+    print(f"itemsGeneral length: {len(itemsGeneral)}")
 
     for generalItem in itemsGeneral:
 
         productURL = generalItem.find('a', href=True)['href']
         r = requests.get(productURL, headers=headers)
         soup = BeautifulSoup(r.content, 'html.parser')
-        modelNumbers = soup.findAll('td', attrs={'class': 'product-list-table-sku'})
-        titles= soup.findAll('td', attrs={'class': 'product-list-table-description'})
-        prices = soup.findAll('td', attrs={'class': 'product-list-table-price'})
+        productListTable = soup.find("table", attrs={'class': 'product-list-table'})
+        modelNumbers = productListTable.findAll('td', attrs={'class': 'product-list-table-sku'})
+        titles = productListTable.findAll('td', attrs={'class': 'product-list-table-description'})
+        prices = productListTable.findAll('td', attrs={'class': 'product-list-table-price'})
 
         for i in range(len(modelNumbers)):
-            title = titles[1].replace(',', '')
+            modelNumbers[i] = modelNumbers[i].text.replace(' ', '')
+        for i in range(len(titles)):
+            titles[i] = titles[i].text.replace('\n', '')
+        for i in range(len(prices)):
+            prices[i] = prices[i].text.replace(',', '')
+
+        print(f"modelNumbers: {modelNumbers}")
+
+        for i in range(len(modelNumbers)):
+            title = titles[i].replace(',', '')
             link = productURL
-            model_number = modelNumbers[1]
-            description = "fondriest.com doesn't have a description with their listings"
-            price = prices[1].replace(',', '')
+            model_number = modelNumbers[i]
+            description = "Fondriest.com doesn't have a description with their listings"
+            price = prices[i].replace(',', '')
 
             file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, {link}, {DATE_ACCESSED}, {model_number}\n")
             item_count += 1
