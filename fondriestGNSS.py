@@ -24,7 +24,6 @@ def fondriestGNSS():
     products = soup.find('div', attrs={'class': 'products wrapper grid products-grid products-grid-partitioned category-products-grid centered equal-height pos-'})
     itemsGeneral = products.findAll('li', attrs={'class': 'item'})
 
-    print(f"itemsGeneral length: {len(itemsGeneral)}")
 
     for generalItem in itemsGeneral:
 
@@ -44,7 +43,6 @@ def fondriestGNSS():
         for i in range(len(prices)):
             prices[i] = prices[i].text.replace(',', '')
 
-        print(f"modelNumbers: {modelNumbers}")
 
         for i in range(len(modelNumbers)):
             title = titles[i].replace(',', '')
@@ -63,4 +61,4 @@ def fondriestGNSS():
 
 
 
-fondriestGNSS()
+# fondriestGNSS()
