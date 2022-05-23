@@ -18,11 +18,11 @@ def scrape(scrapeModule, websiteName):
     print(f"Scrapping {websiteName} took: {after - before} seconds")
 
 
-scrape(fondriestGNSS(), "Fondriest.com for GNSS")
-scrape(cdw(), "CDW.com")
-scrape(allterra(), "Allterra.com")
-scrape(barcodesInc(), "BarcodesInc.com")
-scrape(barcodeGiant(), "BarcodeGiant.com")
+scrape(fondriestGNSS, "Fondriest.com for GNSS")
+scrape(cdw, "CDW.com")
+scrape(allterra, "Allterra.com")
+scrape(barcodesInc, "BarcodesInc.com")
+scrape(barcodeGiant, "BarcodeGiant.com")
 
 # create one big file
 one_file = open(f"web_scrap_all_{str(date.today())}.csv", "w")

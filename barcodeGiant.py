@@ -49,7 +49,7 @@ def barcodeGiant():
                 item_count += 1
             else:
                 if if_price_cart:
-                    print("Price in chart encountered")
+                    print("Price in cart encountered")
                     price_cart_encountered += 1
                 elif if_discontinued:
                     print("Discontinued item encountered")

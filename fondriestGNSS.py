@@ -25,7 +25,9 @@ def fondriestGNSS():
     itemsGeneral = products.findAll('li', attrs={'class': 'item'})
 
 
-    for generalItem in itemsGeneral:
+    for page_count, generalItem in itemsGeneral:
+
+        print(f"Pulling webpage {page_count}...")
 
         productURL = generalItem.find('a', href=True)['href']
         r = requests.get(productURL, headers=headers)
