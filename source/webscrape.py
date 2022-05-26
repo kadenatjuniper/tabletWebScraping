@@ -1,5 +1,6 @@
 import time
 import os
+import traceback
 from datetime import date
 from barcodeGiant import barcodeGiant
 from cdw import cdw
@@ -12,10 +13,14 @@ files = []
 
 
 def scrape(scrapeModule, websiteName):
-    before = time.time()
-    files.append(scrapeModule())
-    after = time.time()
-    print(f"Scrapping {websiteName} took: {after - before} seconds")
+    try:
+        before = time.time()
+        files.append(scrapeModule())
+        after = time.time()
+        print(f"Scrapping {websiteName} took: {after - before} seconds")
+    except Exception as e:
+        print(f"Error scraping {websiteName}.\n   {e}")
+        traceback.print_exc()
 
 
 scrape(fondriestGNSS, "Fondriest.com for GNSS")

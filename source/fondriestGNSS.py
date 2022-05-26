@@ -25,7 +25,7 @@ def fondriestGNSS():
     itemsGeneral = products.findAll('li', attrs={'class': 'item'})
 
 
-    for page_count, generalItem in itemsGeneral:
+    for page_count, generalItem in enumerate(itemsGeneral):
 
         print(f"Pulling webpage {page_count}...")
 
