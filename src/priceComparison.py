@@ -42,6 +42,11 @@ newFile = open(newFilename)
 newFile.readline()  # Remove header
 for line in newFile:
     splitLine = line.split(',')
+
+    if splitLine[NEWFILE_MODEL].strip() == "":
+        splitLine[NEWFILE_MODEL] = splitLine[NEWFILE_TITLE]
+        print(f"No Model Number Found: {splitLine[NEWFILE_TITLE]}")
+
     if splitLine[NEWFILE_MODEL] in items:
         items[splitLine[NEWFILE_MODEL]]['price'].append(splitLine[NEWFILE_PRICE].replace('$', '').replace(' ', '').replace('"', '').replace(',', ''))
         items[splitLine[NEWFILE_MODEL]]['source'].append(splitLine[NEWFILE_SOURCE] + ': ' + splitLine[NEWFILE_LINK])
