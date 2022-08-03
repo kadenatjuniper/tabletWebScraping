@@ -32,10 +32,10 @@ def fondriestGNSS():
         productURL = generalItem.find('a', href=True)['href']
         r = requests.get(productURL, headers=headers)
         soup = BeautifulSoup(r.content, 'html.parser')
-        productListTable = soup.find("table", attrs={'class': 'product-list-table'})
-        modelNumbers = productListTable.findAll('td', attrs={'class': 'product-list-table-sku'})
-        titles = productListTable.findAll('td', attrs={'class': 'product-list-table-description'})
-        prices = productListTable.findAll('td', attrs={'class': 'product-list-table-price'})
+        productListTable = soup.find("div", attrs={'class': 'product-list-table'})
+        modelNumbers = productListTable.findAll('div', attrs={'class': 'product-list-sku'})
+        titles = productListTable.findAll('div', attrs={'class': 'product-list-description'})
+        prices = productListTable.findAll('div', attrs={'class': 'product-list-price'})
         description = soup.find('div', attrs={'class': 'value', 'itemprop': 'description'}).text.replace(',', '-')
 
         for i in range(len(modelNumbers)):
@@ -46,12 +46,11 @@ def fondriestGNSS():
             prices[i] = prices[i].text.replace(',', '')
 
 
-        for i in range(len(modelNumbers)):
-            title = titles[i].replace(',', '')
-            link = productURL
-            model_number = modelNumbers[i]
-            # description = "Fondriest.com doesn't have a description with their listings"
-            price = prices[i].replace(',', '')
+        for i in range(1, len(modelNumbers)):
+            title = titles[i].replace(',', '').strip()
+            link = productURL.strip()
+            model_number = modelNumbers[i].strip()
+            price = prices[i].replace(',', '').strip()
 
             file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, {link}, {DATE_ACCESSED}, {model_number}\n")
             item_count += 1
@@ -62,5 +61,4 @@ def fondriestGNSS():
     return file_string
 
 
-
-# fondriestGNSS()
+#fondriestGNSS()
