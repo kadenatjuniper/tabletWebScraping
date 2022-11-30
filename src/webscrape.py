@@ -7,10 +7,12 @@ from cdw import cdw
 from allterra import allterra
 from barcodesInc import barcodesInc
 from fondriestGNSS import fondriestGNSS
+from rjm import rjm
 
 total_before = time.time()
 files = []
 
+error = 0
 
 def scrape(scrapeModule, websiteName):
     try:
@@ -18,10 +20,11 @@ def scrape(scrapeModule, websiteName):
         files.append(scrapeModule())
         after = time.time()
         print(f"Scrapping {websiteName} took: {after - before} seconds")
+        return 0
     except Exception as e:
         print(f"Error scraping {websiteName}.\n   {e}")
         traceback.print_exc()
-
+        return 1
 
 def createOneFile(files):
     one_file = open(f"web_scrap_all_{str(date.today())}.csv", "w")
@@ -36,15 +39,18 @@ def createOneFile(files):
     one_file.close()
 
 
-scrape(fondriestGNSS, "Fondriest.com for GNSS")
-scrape(cdw, "CDW.com")
-scrape(allterra, "Allterra.com")
-scrape(barcodesInc, "BarcodesInc.com")
-scrape(barcodeGiant, "BarcodeGiant.com")
+error = error + scrape(rjm, "RJMPrecision.com")
+error = error + scrape(fondriestGNSS, "Fondriest.com for GNSS")
+error = error + scrape(cdw, "CDW.com")
+error = error + scrape(allterra, "Allterra.com")
+error = error + scrape(barcodesInc, "BarcodesInc.com")
+error = error + scrape(barcodeGiant, "BarcodeGiant.com")
 
 createOneFile(files)
 
 total_after = time.time()
 print(f"Web Scrapping All Websites took: {total_after - total_before} seconds")
+if error:
+    print(f"----------- An error occurred While scraping one of the websites --------------")
 
 

@@ -3,10 +3,10 @@ from bs4 import BeautifulSoup
 from datetime import date
 
 
-def allterra():
-    print("----> STARTING: web scraping of Allterra.com")
+def rjm():
+    print("----> STARTING: web scraping of RJMPrecision.com")
     item_count = 0
-    SOURCE_WEBSITE = 'allterra'
+    SOURCE_WEBSITE = 'rjm'
     DATE_ACCESSED = str(date.today())
 
     file_string = f"web_scrap_{SOURCE_WEBSITE}_{DATE_ACCESSED}.csv"
@@ -18,36 +18,37 @@ def allterra():
         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
     }
 
-    URL = f"https://allterracentral.com/products.html/mapping-gis/handhelds.html"
+    URL = "https://shoprjmprecision.com/collections/rugged-tablets"
     r = requests.get(URL, headers=headers)
 
     soup = BeautifulSoup(r.content, 'html.parser')
 
-    items = soup.findAll('li', attrs={'class': 'item product product-item'})
+    items = soup.findAll('div', attrs={'class': 'product-list-item'})
 
     for item in items:
         title = 'None'
         description = 'None'
         price = 'None'
         link = 'None'
-        title_object = item.find('a', attrs={'class': 'product-item-link'})
+        title_object = item.find('h4', attrs={'class': 'product-list-item-title'})
         if title_object:
-            title = title_object['title'].replace(',', '')
-            link = title_object['href']
+            title = title_object.text
+            link = title_object.a['href']
         model_number = ''
-        description = "allterra.com doesn't have a description with their listings"
-        price_object = item.find('span', attrs={'class': 'price'})
+        description_obj = item.find('p', attrs={'class': 'product-list-item-vendor vendor meta'})
+        if description_obj:
+            description = description_obj.text
+        price_object = item.find('span', attrs={'class': 'money'})
         if price_object:
-            price = price_object.text.replace(',', '')
-        file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, {link}, {DATE_ACCESSED}, {model_number}\n")
+            price = price_object.text.replace(',', '').replace('$', '')
+        file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, https://shoprjmprecision.com/{link}, {DATE_ACCESSED}, {model_number}\n")
         item_count += 1
 
 
-    print(f"----> FINISHED: Web scraping Allterra.com \nThe number of items saved to the file is {item_count}.")
+    print(f"----> FINISHED: Web scraping RJMPrecision.com \nThe number of items saved to the file is {item_count}.")
 
     file.close()
     return file_string
 
 
-
-# allterra_web_scrap()
+# rjm()

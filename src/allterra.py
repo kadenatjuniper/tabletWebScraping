@@ -50,4 +50,4 @@ def allterra():
 
 
 
-# allterra_web_scrap()
+# allterra()
