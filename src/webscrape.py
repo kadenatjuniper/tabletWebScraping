@@ -8,6 +8,7 @@ from allterra import allterra
 from barcodesInc import barcodesInc
 from fondriestGNSS import fondriestGNSS
 from rjm import rjm
+from waypointtech import waypointtech
 
 total_before = time.time()
 files = []
@@ -45,6 +46,7 @@ error = error + scrape(cdw, "CDW.com")
 error = error + scrape(allterra, "Allterra.com")
 error = error + scrape(barcodesInc, "BarcodesInc.com")
 error = error + scrape(barcodeGiant, "BarcodeGiant.com")
+error = error + scrape(waypointtech, "WaypointTech.com")
 
 createOneFile(files)
 

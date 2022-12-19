@@ -17,32 +17,30 @@ def rjm():
     headers = {
         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
     }
+    for pagecount in range(1, 10):
+        print(f"Pulling page {pagecount}")
+        URL = f"https://shoprjmprecision.com/collections/data-collectors?page={pagecount}"
+        r = requests.get(URL, headers=headers)
 
-    URL = "https://shoprjmprecision.com/collections/rugged-tablets"
-    r = requests.get(URL, headers=headers)
+        soup = BeautifulSoup(r.content, 'html.parser')
 
-    soup = BeautifulSoup(r.content, 'html.parser')
+        items = soup.findAll('div', attrs={'class': 'product-card product-card-wrapper'})
 
-    items = soup.findAll('div', attrs={'class': 'product-list-item'})
-
-    for item in items:
-        title = 'None'
-        description = 'None'
-        price = 'None'
-        link = 'None'
-        title_object = item.find('h4', attrs={'class': 'product-list-item-title'})
-        if title_object:
-            title = title_object.text
-            link = title_object.a['href']
-        model_number = ''
-        description_obj = item.find('p', attrs={'class': 'product-list-item-vendor vendor meta'})
-        if description_obj:
-            description = description_obj.text
-        price_object = item.find('span', attrs={'class': 'money'})
-        if price_object:
-            price = price_object.text.replace(',', '').replace('$', '')
-        file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, https://shoprjmprecision.com/{link}, {DATE_ACCESSED}, {model_number}\n")
-        item_count += 1
+        for item in items:
+            title = 'None'
+            description = 'None'
+            price = 'None'
+            link = 'None'
+            title = item.find('span', attrs={'class': 'h4 item__title product-card__title'}).text
+            link = item.find('a', attrs={'class': 'list-view-item__link-image product-card__link-image'})['href']
+            model_number = ''
+            description = item.find('a', attrs={'class': 'product-item__vendor link'}).text
+            price_object = item.find('span', attrs={'class': 'price-item price-item--regular'})
+            if price_object:
+                price = price_object.text.replace(',', '').replace('$', '').strip()
+                price = ''.join(c for c in price if c.isnumeric() or c == '.')
+            file.write(f"{title}, {description}, {price}, {SOURCE_WEBSITE}, https://shoprjmprecision.com/{link}, {DATE_ACCESSED}, {model_number}\n")
+            item_count += 1
 
 
     print(f"----> FINISHED: Web scraping RJMPrecision.com \nThe number of items saved to the file is {item_count}.")
