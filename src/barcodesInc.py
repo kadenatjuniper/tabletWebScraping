@@ -69,4 +69,4 @@ def get_total_pages(scraper):
     return total_pages
 
 
-# barcodes_inc_web_scrap()
+# barcodesInc()

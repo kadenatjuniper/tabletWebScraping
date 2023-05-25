@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import date
+import sys
 
 
 def barcodeGiant():
@@ -13,18 +14,21 @@ def barcodeGiant():
     DATE_ACCESSED = str(date.today())
 
     file_string = f"web_scrap_{SOURCE_WEBSITE}_{DATE_ACCESSED}.csv"
-    file = open(file_string, "w")
+    file = open(file_string, "w", encoding="utf-8")
     file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Model #\n")
 
-    while discontinued_encountered < 100:
+    while page_count < 1745:
         URL = f"https://www.barcodegiant.com/cats/tablets/page/{page_count + 1}.htm"
         print(f"Pulling webpage {page_count}...")
+        sys.stdout.flush()
         page_count += 1
+
         r = requests.get(URL)
 
         soup = BeautifulSoup(r.content, 'html.parser')
 
         items = soup.findAll('div', attrs={'class': 'item-area clearfix'})
+
 
         for item in items:
             if_price_cart = item.find('button', attrs={'title': 'See price in cart'})
@@ -61,4 +65,4 @@ def barcodeGiant():
     return file_string
 
 
-# barcode_giant_web_scrap()
+barcodeGiant()
