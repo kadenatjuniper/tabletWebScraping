@@ -17,8 +17,8 @@ def barcodeGiant():
     file = open(file_string, "w", encoding="utf-8")
     file.write("Title, Description, Price, Web_source, Link, Date_Accessed, Model #\n")
 
-    while page_count < 1745:
-        URL = f"https://www.barcodegiant.com/cats/tablets/page/{page_count + 1}.htm"
+    while page_count < 698:
+        URL = f"https://www.barcodegiant.com/cats/tablets/page/{page_count + 1}/show/25.htm"
         print(f"Pulling webpage {page_count}...")
         sys.stdout.flush()
         page_count += 1
@@ -65,4 +65,4 @@ def barcodeGiant():
     return file_string
 
 
-barcodeGiant()
+# barcodeGiant()
